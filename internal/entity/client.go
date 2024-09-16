@@ -8,21 +8,21 @@ import (
 )
 
 type Client struct {
-	ID       string
-	Name     string
-	Email    string
-	Accounts []*Account
-	CreateAt time.Time
-	UpdateAt time.Time
+	ID        string
+	Name      string
+	Email     string
+	Accounts  []*Account
+	CreatedAt time.Time
+	UpdateAt  time.Time
 }
 
 func NewClient(name string, email string) (*Client, error) {
 	client := &Client{
-		ID:       uuid.New().String(),
-		Name:     name,
-		Email:    email,
-		CreateAt: time.Now(),
-		UpdateAt: time.Now(),
+		ID:        uuid.New().String(),
+		Name:      name,
+		Email:     email,
+		CreatedAt: time.Now(),
+		UpdateAt:  time.Now(),
 	}
 	err := client.Validate()
 	if err != nil {

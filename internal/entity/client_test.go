@@ -12,7 +12,7 @@ func TestNewClient(t *testing.T) {
 	assert.NotEmpty(t, client.ID)
 	assert.Equal(t, "John Doe", client.Name)
 	assert.Equal(t, "john@doe.com", client.Email)
-	assert.NotEmpty(t, client.CreateAt)
+	assert.NotEmpty(t, client.CreatedAt)
 	assert.NotEmpty(t, client.UpdateAt)
 }
 

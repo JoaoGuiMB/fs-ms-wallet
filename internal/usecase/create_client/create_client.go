@@ -45,7 +45,7 @@ func (uc *CreateClientUseCase) Execute(input *CreateClientInputDTO) (*CreateClie
 		ID:       client.ID,
 		Name:     client.Name,
 		Email:    client.Email,
-		CreateAt: client.CreateAt,
+		CreateAt: client.CreatedAt,
 		UpdateAt: client.UpdateAt,
 	}, nil
 
