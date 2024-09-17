@@ -3,11 +3,11 @@ package entity
 import "time"
 
 type Account struct {
-	ID       string
-	Client   *Client
-	Balance  float64
-	CreateAt time.Time
-	UpdateAt time.Time
+	ID        string
+	Client    *Client
+	Balance   float64
+	CreatedAt time.Time
+	UpdateAt  time.Time
 }
 
 func NewAccount(client *Client) *Account {
@@ -15,11 +15,11 @@ func NewAccount(client *Client) *Account {
 		return nil
 	}
 	return &Account{
-		ID:       client.ID,
-		Client:   client,
-		Balance:  0,
-		CreateAt: time.Now(),
-		UpdateAt: time.Now(),
+		ID:        client.ID,
+		Client:    client,
+		Balance:   0,
+		CreatedAt: time.Now(),
+		UpdateAt:  time.Now(),
 	}
 }
 
