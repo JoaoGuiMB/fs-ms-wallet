@@ -26,8 +26,7 @@ func (db *ClientDB) Get(id string) (*entity.Client, error) {
 	defer stmt.Close()
 	row := stmt.QueryRow(id)
 
-	err = row.Scan(&client.ID, &client.Name, &client.Email, &client.CreatedAt)
-	if err != nil {
+	if err := row.Scan(&client.ID, &client.Name, &client.Email, &client.CreatedAt); err != nil {
 		return nil, err
 	}
 	return client, nil

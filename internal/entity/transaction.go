@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -47,6 +48,7 @@ func (t *Transaction) Validate() error {
 		return errors.New("amount must be greater than 0")
 	}
 
+	fmt.Println(t.AccountFrom.ID)
 	if (t.AccountFrom.Balance - t.Amount) < 0 {
 		return errors.New("insuficient funds")
 	}

@@ -1,15 +1,17 @@
 package create_transaction
 
 import (
+	"fmt"
+
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/entity"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/gateway"
 	"github.com.br/joaoguimb/fc-ms-wallet/pkg/events"
 )
 
 type CreateTransactionInputDTO struct {
-	AccountIDFrom string
-	AccountIDTo   string
-	Amount        float64
+	AccountIDFrom string  `json:"account_id_from"`
+	AccountIDTo   string  `json:"account_id_to"`
+	Amount        float64 `json:"amount"`
 }
 
 type CreateTransactionOutputDTO struct {
@@ -34,6 +36,7 @@ func NewCreateTransactionUseCase(transactionGateway gateway.TransactionGateway, 
 
 func (uc *CreateTransactionUseCase) Execute(input *CreateTransactionInputDTO) (*CreateTransactionOutputDTO, error) {
 	accountFrom, err := uc.AccountGateway.FindByID(input.AccountIDFrom)
+
 	if err != nil {
 		return nil, err
 	}
@@ -46,12 +49,15 @@ func (uc *CreateTransactionUseCase) Execute(input *CreateTransactionInputDTO) (*
 	transaction, err := entity.NewTransaction(accountFrom, accountTo, input.Amount)
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 
 	}
 
 	err = uc.TransactionGateway.Create(transaction)
+
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

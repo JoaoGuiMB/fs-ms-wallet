@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	create_account "github.com.br/joaoguimb/fc-ms-wallet/internal/usecase/create_acount"
@@ -26,6 +27,7 @@ func (wh *WebAccountHandler) CreateAccount(w http.ResponseWriter, r *http.Reques
 	}
 
 	output, err := wh.CreateAccountUseCase.Execute(&dto)
+	fmt.Println(err)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

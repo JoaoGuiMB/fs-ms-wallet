@@ -1,12 +1,14 @@
 package create_account
 
 import (
+	"fmt"
+
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/entity"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/gateway"
 )
 
 type CreateAccountInputDTO struct {
-	ClientID string
+	ClientID string `json:"client_id"`
 }
 
 type CreateAccountOutputDTO struct {
@@ -27,6 +29,7 @@ func NewCreateAccountUseCase(accountGateway gateway.AccountGateway, clientGatewa
 
 func (uc *CreateAccountUseCase) Execute(input *CreateAccountInputDTO) (*CreateAccountOutputDTO, error) {
 	client, err := uc.ClientGateway.Get(input.ClientID)
+	fmt.Println("aquiasd")
 	if err != nil {
 		return nil, err
 	}

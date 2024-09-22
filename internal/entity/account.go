@@ -1,6 +1,10 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Account struct {
 	ID        string
@@ -15,7 +19,7 @@ func NewAccount(client *Client) *Account {
 		return nil
 	}
 	return &Account{
-		ID:        client.ID,
+		ID:        uuid.New().String(),
 		Client:    client,
 		Balance:   0,
 		CreatedAt: time.Now(),
