@@ -1,4 +1,4 @@
-package create_acount
+package create_account
 
 import (
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/entity"
