@@ -3,6 +3,7 @@ package createtransaction
 import (
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/entity"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/gateway"
+	"github.com.br/joaoguimb/fc-ms-wallet/pkg/events"
 )
 
 type CreateTransactionInputDTO struct {
@@ -18,12 +19,16 @@ type CreateTransactionOutputDTO struct {
 type CreateTransactionUseCase struct {
 	TransactionGateway gateway.TransactionGateway
 	AccountGateway     gateway.AccountGateway
+	EventDispacther    events.EventDispatcherInterface
+	TransactionCreated events.EventInterface
 }
 
-func NewCreateTransactionUseCase(transactionGateway gateway.TransactionGateway, accountGateway gateway.AccountGateway) *CreateTransactionUseCase {
+func NewCreateTransactionUseCase(transactionGateway gateway.TransactionGateway, accountGateway gateway.AccountGateway, eventDispacther events.EventDispatcherInterface, transactionCreated events.EventInterface) *CreateTransactionUseCase {
 	return &CreateTransactionUseCase{
 		TransactionGateway: transactionGateway,
 		AccountGateway:     accountGateway,
+		EventDispacther:    eventDispacther,
+		TransactionCreated: transactionCreated,
 	}
 }
 
@@ -50,7 +55,12 @@ func (uc *CreateTransactionUseCase) Execute(input *CreateTransactionInputDTO) (*
 		return nil, err
 	}
 
-	return &CreateTransactionOutputDTO{
+	output := &CreateTransactionOutputDTO{
 		TransactionID: transaction.ID,
-	}, nil
+	}
+
+	uc.TransactionCreated.SetPayload(output)
+	uc.EventDispacther.Dispatch(uc.TransactionCreated)
+
+	return output, nil
 }
