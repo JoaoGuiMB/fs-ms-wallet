@@ -41,7 +41,7 @@ func (s *AccountDBTestSuite) TestFindByID() {
 	s.db.Exec("INSERT INTO clients (id, name, email, created_at) VALUES (?, ?, ?, ?)", "1", "John Doe", "john@doe.com", s.client.CreatedAt)
 	s.db.Exec("INSERT INTO accounts (id, client_id, balance, created_at) VALUES (?, ?, ?, ?)", "1", "1", 100, s.client.CreatedAt)
 
-	accountDb, err := s.accountDB.FindByID(1)
+	accountDb, err := s.accountDB.FindByID("1")
 	s.Nil(err)
 	s.Equal(accountDb.ID, "1")
 	s.Equal(accountDb.Client.ID, "1")
