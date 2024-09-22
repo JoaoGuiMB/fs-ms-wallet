@@ -22,7 +22,7 @@ func (t *TransactionDB) Create(transaction *entity.Transaction) error {
 		return err
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(transaction.ID, transaction.AccountFrom, transaction.AccountTo, transaction.Amount, transaction.CreatedAt)
+	_, err = stmt.Exec(transaction.ID, transaction.AccountFrom.ID, transaction.AccountTo.ID, transaction.Amount, transaction.CreatedAt)
 	if err != nil {
 		return err
 	}

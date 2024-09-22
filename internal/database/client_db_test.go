@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/entity"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/suite"
 )
 
