@@ -7,27 +7,35 @@ import (
 
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/database"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/event"
+	"github.com.br/joaoguimb/fc-ms-wallet/internal/event/handler"
 	create_account "github.com.br/joaoguimb/fc-ms-wallet/internal/usecase/create_acount"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/usecase/create_client"
 	createtransaction "github.com.br/joaoguimb/fc-ms-wallet/internal/usecase/create_transaction"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/web"
 	"github.com.br/joaoguimb/fc-ms-wallet/internal/web/webserver"
 	"github.com.br/joaoguimb/fc-ms-wallet/pkg/events"
+	"github.com.br/joaoguimb/fc-ms-wallet/pkg/kafka"
 	"github.com.br/joaoguimb/fc-ms-wallet/pkg/uow"
+	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/wallet?parseTime=true")
+	db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/wallet?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
 
-	eventDispatcher := events.NewEventDispatcher()
-	transactionCreatedEvent := event.NewTransactionCreated()
+	cofigMap := ckafka.ConfigMap{
+		"bootstrap.servers": "kafka:29092",
+		"group.id":          "wallet",
+	}
+	kafkaProducer := kafka.NewKafkaProducer(&cofigMap)
 
-	//eventDispatcher.Register("TransactionCreated", handler)
+	eventDispatcher := events.NewEventDispatcher()
+	eventDispatcher.Register("transaction_created", handler.NewTransactionCreatedKafkaHandler(kafkaProducer))
+	transactionCreatedEvent := event.NewTransactionCreated()
 
 	cliendDB := database.NewClientDB(db)
 	accountDB := database.NewAccountDB(db)
