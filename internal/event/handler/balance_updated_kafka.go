@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com.br/joaoguimb/fc-ms-wallet/pkg/events"
 	"github.com.br/joaoguimb/fc-ms-wallet/pkg/kafka"
 )
 
@@ -17,10 +18,10 @@ func NewBalanceUpdatedKafkaHandler(kafka *kafka.Producer) *BalanceUpdatedKafkaHa
 	}
 }
 
-func (h *BalanceUpdatedKafkaHandler) Handle(message interface{}, wg *sync.WaitGroup) {
+func (h *BalanceUpdatedKafkaHandler) Handle(message events.EventInterface, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	err := h.Kafka.Publish(message, nil, "balance")
+	err := h.Kafka.Publish(message, nil, "balances")
 	fmt.Println("BalanceUpdatedKafkaHandler: ", message)
 	if err != nil {
 		panic(err)
