@@ -17,7 +17,18 @@ services:
       - 3306:3306
     volumes:
       - .docker/mysql:/var/lib/mysql
-  
+
+  balancesmysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: balances
+      MYSQL_PASSWORD: root
+    ports:
+      - 3307:3306
+    volumes:
+      - .docker/balancesmyql:/var/lib/mysql
+
   zookeeper:
     image: "confluentinc/cp-zookeeper:6.1.0"
     container_name: zookeeper
