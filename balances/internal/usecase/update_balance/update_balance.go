@@ -3,10 +3,10 @@ package updatebalance
 import "github.com.br/joaoguimb/fc-ms-wallet/balances/internal/gateway"
 
 type UpdateBalanceInputDTO struct {
-	AccountIDFrom        string  `json:"account_id_from"`
-	AccountIDTo          string  `json:"account_id_to"`
-	BalanceAccountIDFrom float64 `json:"balance_account_id_from"`
-	BalanceAccountIDTo   float64 `json:"balance_account_id_to"`
+	AccountIDFrom        string `json:"account_id_from"`
+	AccountIDTo          string `json:"account_id_to"`
+	BalanceAccountIDFrom int    `json:"balance_account_id_from"`
+	BalanceAccountIDTo   int    `json:"balance_account_id_to"`
 }
 
 type UpdateBalanceOutputDTO struct {

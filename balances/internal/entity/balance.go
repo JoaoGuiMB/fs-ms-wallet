@@ -2,17 +2,17 @@ package entity
 
 type Balance struct {
 	AccountID string
-	Amount    float64
+	Amount    int
 }
 
-func NewBalance(accountID string, amount float64) *Balance {
+func NewBalance(accountID string, amount int) *Balance {
 	return &Balance{
 		AccountID: accountID,
 		Amount:    amount,
 	}
 }
 
-func (b *Balance) SetAmount(amount float64) *Balance {
+func (b *Balance) SetAmount(amount int) *Balance {
 	b.Amount = amount
 	return b
 }
